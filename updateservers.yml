@@ -5,8 +5,7 @@
   tasks:
     -name Update package cache
      apt:
-       update_cache: yes
-   
+       update_cache: yes  
     -name Upgrade packages
      apt:
        upgrade: safe

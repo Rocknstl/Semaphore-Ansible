@@ -3,11 +3,11 @@
   become: true
   become_user: root
   tasks:
--name Update package cache
- apt:
-   update_cache: yes
+    -name Update package cache
+     apt:
+       update_cache: yes
    
--name Upgrade packages
- apt:
-   upgrade: safe
-   autoclean: yes
+    -name Upgrade packages
+     apt:
+       upgrade: safe
+       autoclean: yes

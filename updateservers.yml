@@ -2,8 +2,8 @@
 - hosts: servers
   gather_facts: yes
   become: yes
-  become_method: su
   become_user: root
+  ansible_become_password: 2HRD2CRK
   
   tasks:
     - name: Perform a dist-upgrade.

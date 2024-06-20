@@ -3,6 +3,9 @@
   become: true
   become_user: root
   tasks:
-    -name Update package cache
-     apt: update_cache=yes upgrade=safe
+     - name: Check if there are packages available to be installed/upgraded
+       command: /usr/lib/update-notifier/apt-check --package-names
+       register: packages
+     - name Update package cache
+       apt: update_cache=yes upgrade=safe
        autoclean: yes

@@ -3,12 +3,11 @@
   gather_facts: yes
   become: yes
   become_user: root
-  ansible_become_password: 2HRD2CRK
   
   tasks:
     - name: Perform a dist-upgrade.
       ansible.builtin.apt:
-        upgrade: safe
+        upgrade: dist
         update_cache: yes
 
     - name: Check if a reboot is required.

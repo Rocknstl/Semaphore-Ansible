@@ -2,10 +2,10 @@
 - hosts: servers
   become: true
   tasks:
-- name: Run the equivalent of "apt-get update" as a separate step
+- name: Update all host/vm packages
   ansible.builtin.apt:
-    update_cache: yes
-- name: Update all packages to their latest version
-  ansible.builtin.apt:
-    name: "*"
-    state: latest
+      update_cache: true
+      cache_valid_time: 3600
+      name: "*"
+      state: latest
+  

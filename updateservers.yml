@@ -3,9 +3,11 @@
   become: true
   become_user: root
   tasks:
-- name: Update all host/vm packages
-  ansible.builtin.apt:
-      update_cache: true
-      cache_valid_time: 3600
-      name: "*"
-      state: latest
+-name Update package cache
+ apt:
+   update_cache: yes
+   
+-name Upgrade packages
+ apt:
+   upgrade: safe
+   autoclean: yes

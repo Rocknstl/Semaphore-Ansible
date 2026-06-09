@@ -46,3 +46,55 @@
     - name: Remove dependencies that are no longer required.
       ansible.builtin.apt:
         autoremove: yes
+        - name: Ensure journald config directory exists.
+      ansible.builtin.file:
+        path: /etc/systemd/journald.conf.d
+        state: directory
+        owner: root
+        group: root
+        mode: '0755'
+
+    - name: Limit systemd journal disk usage.
+      ansible.builtin.copy:
+        dest: /etc/systemd/journald.conf.d/limits.conf
+        owner: root
+        group: root
+        mode: '0644'
+        content: |
+          [Journal]
+          SystemMaxUse=500M
+          RuntimeMaxUse=100M
+          MaxRetentionSec=14day
+      notify: Restart systemd-journald
+
+    - name: Ensure Netdata journald config directory exists.
+      ansible.builtin.file:
+        path: /etc/systemd/journald@netdata.conf.d
+        state: directory
+        owner: root
+        group: root
+        mode: '0755'
+
+    - name: Limit Netdata journal disk usage.
+      ansible.builtin.copy:
+        dest: /etc/systemd/journald@netdata.conf.d/limits.conf
+        owner: root
+        group: root
+        mode: '0644'
+        content: |
+          [Journal]
+          SystemMaxUse=200M
+          RuntimeMaxUse=50M
+          MaxRetentionSec=7day
+        notify: Restart systemd-journald-netdata
+
+  handlers:
+    - name: Restart systemd-journald
+      ansible.builtin.systemd:
+        name: systemd-journald
+        state: restarted
+
+    - name: Restart systemd-journald-netdata
+      ansible.builtin.systemd:
+        name: systemd-journald@netdata
+        state: restarted

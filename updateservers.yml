@@ -3,8 +3,31 @@
   gather_facts: yes
   become: yes
   become_user: root
-  
+
   tasks:
+    - name: Ensure logrotate is installed.
+      ansible.builtin.apt:
+        name: logrotate
+        state: present
+        update_cache: yes
+
+    - name: Configure custom log rotation.
+      ansible.builtin.copy:
+        dest: /etc/logrotate.d/local-custom
+        owner: root
+        group: root
+        mode: '0644'
+        content: |
+          /var/log/local-custom/*.log {
+              weekly
+              rotate 1
+              missingok
+              notifempty
+              compress
+              delaycompress
+              copytruncate
+          }
+
     - name: Perform a dist-upgrade.
       ansible.builtin.apt:
         upgrade: dist

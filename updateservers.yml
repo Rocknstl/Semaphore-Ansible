@@ -46,7 +46,7 @@
     - name: Remove dependencies that are no longer required.
       ansible.builtin.apt:
         autoremove: yes
-        - name: Ensure journald config directory exists.
+    - name: Ensure journald config directory exists.
       ansible.builtin.file:
         path: /etc/systemd/journald.conf.d
         state: directory

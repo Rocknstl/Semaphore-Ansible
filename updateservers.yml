@@ -86,7 +86,7 @@
           SystemMaxUse=200M
           RuntimeMaxUse=50M
           MaxRetentionSec=7day
-        notify: Restart systemd-journald-netdata
+      notify: Restart systemd-journald-netdata
 
   handlers:
     - name: Restart systemd-journald
